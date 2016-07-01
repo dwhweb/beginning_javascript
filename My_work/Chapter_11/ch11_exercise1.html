@@ -1,0 +1,27 @@
+<html lang="en" dir="ltr"><head>
+        <meta charset="utf-8">
+        <title>Chapter 11, Exercise 1</title>
+    </head>
+    <body contenteditable="true">
+        <form name="form1" id="form1">
+            <label for="tempInput">Temperature in ℉</label>
+            <input type="number" id="tempInput" name="tempInput">
+        </form>
+        
+        <output id="degCent" name="degCent" for="tempInput" form="form1">
+        </output>
+        
+        <script>
+            function calcCent() {
+                var tempInput = document.getElementById("tempInput").value;
+                var degrees = (5/9 * (tempInput - 32)).toFixed(2);
+                
+                degCent.value = tempInput + "\xB0F is " 
+                        + degrees + "\xB0C"; 
+            }
+                
+            document.form1.addEventListener("input", calcCent);
+        </script>
+    
+
+</body></html>

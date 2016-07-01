@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 5, Exercise 2</title>
+    </head>
+    <body>
+        <script>
+            var someArray = [];
+            var input = null;
+            
+            while((input = prompt("Please enter a name:", "")) !== "") {
+                someArray.push(input);
+            }
+            
+            someArray.sort();
+            document.write(someArray.join("<br/>"));
+        </script>
+    </body>
+</html>

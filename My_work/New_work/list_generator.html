@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>List Generator</title>
+    </head>
+    <body>
+        <script>
+            var list = document.createElement("ul");
+            
+            do {
+                var someText = prompt("Please enter an item:", "");
+                
+                if(someText !== "" && someText !== null) {
+                    var linode = document.createElement("li");
+                    linode.appendChild(document.createTextNode(someText));
+                    list.appendChild(linode);
+                }
+            } while(someText)
+                
+            document.body.appendChild(list);
+        </script>
+    </body>
+</html>

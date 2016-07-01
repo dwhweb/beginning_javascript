@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Chapter 11, Exercise 2</title>
+</head>
+<body>
+    <h1>System configurator</h1>
+    <br>
+    <form name="computer" id="computer">
+        <label for="processor" id="processorLabel">Processor: </label>
+        <select size="1" id="processor" name="processor">
+            <option selected="selected">Intel Core i5</option>
+            <option>Intel Core i7</option>
+            <option>AMD FX</option>
+        </select>
+        <br />
+        <label for="motherboard" id="motherLabel">Motherboard: </label>
+        <br />
+        <br />
+        <label for="RAM" id="RAMLabel">RAM:</label>
+        <br />
+        <label>Memory configuration: </label>
+        <br>
+        <input type="radio" name="memoryConfig" checked="checked" value="1">
+        <label>Single stick</label>
+        <br>
+        <input type="radio" name="memoryConfig" value="2">
+        <label>Dual channel</label>
+        <br>
+        <input type="radio" name="memoryConfig" value="4">
+        <label>2 x Dual channel</label>
+        <br><br>
+        
+        <label for="storage">Storage:</label>
+        <select size="1" id="storage" name="storage">
+            <option selected="selected" value="53.04">
+                2TB Seagate ST2000DM001 (£53.04)
+            </option>
+            <option value="329.82">1TB Samsung 850 PRO (£329.82)</option>
+        </select>
+        <br><br>
+        
+        <label>Optional components:</label>
+        <br>
+        <input type="checkbox" name="chkOptical" checked="checked" value="38.39">
+        <label> LG UH12NS30 Internal Blu-ray (£38.39)</label>
+        <br>
+        <input type="checkbox" name="chkSound" checked="checked" value="64.21">
+        <label>Creative Sound blaster Z (£64.21)</label>
+        <br><br>
+        
+        <label>Total price is: </label>
+        <strong>
+        <output id="totalPrice" name="totalPrice" form="computer"></output>
+        </strong>
+    </form>
+
+    <script>
+        "use strict";
+        var form = document.computer;
+        var processor = document.getElementById("processor");
+        
+        var i5Prices = [["6400 2.7Ghz (£152.58)", 152.58], 
+            ["6600 3.3Ghz (£186.97)", 186.97], 
+            ["6600K 3.5Ghz (£197.94)", 197.94]];
+        var i7Prices = [["6700 3.4Ghz (£259.40)", 259.40], 
+            ["6700K 4Ghz (£281.00)", 24.00], 
+            ["6700K Retail 4Ghz (£289.40)", 289.40]];
+        var fxPrices = [["6300 Black Edition 3.5Ghz (£82.36)", 82.36], 
+            ["8370 4Ghz (£156.35)", 156.35],
+            ["9590 Black Edition 4.7Ghz (£168.59", 168.59]];
+        
+        var intelMotherboards = [["Gigabyte GA-Z97 (£58.76)", 58.76],
+            ["Asus Z97-K (£103.16)", 103.16], 
+            ["MSI Z97 XPOWER AC (£239.96)", 239.96]];
+        
+        var amdMotherboards = [["MSI 970A-G43 (£52.04)", 52.04], 
+            ["ASRock 970 Performance (£101.96)", 101.96], 
+            ["Asus Crosshair V Formula-Z (£191.99)", 168.59]];
+        
+        var DDR3 = [["Corsair Memory Value Select 2GB DDR3 1333Mhz (£10.30)",
+                10.30], 
+            ["4GB Corsair DDR3 Desktop PC3-12800 (1600) (£15.65)", 15.65], 
+            ["8GB Corsair DDR3 Vengeance PC3-12800 (1600) (£40.13)", 40.13]];
+        
+        var DDR4 = [["4GB Corsair DDR4 Value Select, PC4-17000 (2133) (£15.17)",
+                15.17], 
+            ["8GB Corsair DDR4 Vengeance LPX Red, PC4-19200 (2400) (£34.21)", 
+                34.21], 
+            ["16GB Corsair DDR4 Vengeance LPX Black, PC4-21300 (2666) (£80.12)",
+                80.12]];
+        
+        function updatePrice() {
+            var elements = form.elements;
+            var total = 0;
+            
+            for(var x = 0; x < form.length; x++){
+                if(parseFloat(elements[x].value) 
+                        && elements[x].name !== "memoryConfig"
+                        && elements[x].name !== "RAM"
+                        && elements[x].name !== "totalPrice") {
+                    
+                    
+                    if(elements[x].type !== "checkbox") {
+                        total = parseFloat(total) + parseFloat(elements[x].value);
+                        console.log(elements[x].value);
+                    } else {
+                        if(elements[x].checked) {
+                            total = parseFloat(total) + parseFloat(elements[x].value);
+                            console.log(elements[x].value);
+                        }
+                    }
+                }
+            }
+            total += (parseFloat(document.getElementById("RAM").value)) 
+                    * (parseInt(form.elements["memoryConfig"].value));
+            
+            totalPrice.value = total.toFixed(2);
+        }
+        
+        function renderSelect(name, options) {
+            var select = document.createElement("select");
+            
+            select.setAttribute("size", "1");
+            select.setAttribute("id", name);
+            select.setAttribute("name", name);
+            
+            for(var x = 0; x < options.length; x++) {
+                var newOption = document.createElement("option");
+                
+                if(x === 0) {
+                    newOption.setAttribute("selected", "selected");    
+                }
+                
+                newOption.setAttribute("value", options[x][1]);
+                newOption.appendChild(document.createTextNode(options[x][0]));
+                select.appendChild(newOption);
+            }
+            
+            return select;
+        }
+        
+        function renderSpeeds() {
+            var speedNode;
+            
+            if(document.getElementById("speed") !== null) {
+                document.getElementById("speed").remove();
+            }
+            
+            switch(processor.value) {
+                case "Intel Core i5":
+                    speedNode = renderSelect("speed", i5Prices);
+                    break;
+                case "Intel Core i7":
+                    speedNode = renderSelect("speed", i7Prices);
+                    break;
+                case "AMD FX":
+                    speedNode = renderSelect("speed", fxPrices);
+                    break;
+            }
+            
+            insertAfter("processor", speedNode);
+        }
+        
+        function renderMotherboards() {
+            var motherboardNode;
+            
+            if(document.getElementById("motherboard") !== null) {
+                document.getElementById("motherboard").remove();
+            }
+            
+            switch(processor.value) {
+                case "Intel Core i5":
+                    motherboardNode = renderSelect("motherboard", intelMotherboards);
+                    break;
+                case "Intel Core i7":
+                    motherboardNode = renderSelect("motherboard", intelMotherboards);
+                    break;
+                case "AMD FX":
+                    motherboardNode = renderSelect("motherboard", amdMotherboards);
+                    break;
+            }
+            
+            insertAfter("motherLabel", motherboardNode);
+        }
+        
+        function renderRAM() {
+            var RAMNode;
+            
+            if(document.getElementById("RAM") !== null) {
+                document.getElementById("RAM").remove();
+            }
+            
+            switch(processor.value) {
+                case "Intel Core i5":
+                    RAMNode = renderSelect("RAM", DDR4);
+                    break;
+                case "Intel Core i7":
+                    RAMNode = renderSelect("RAM", DDR4);
+                    break;
+                case "AMD FX":
+                    RAMNode = renderSelect("RAM", DDR3);
+                    break;
+            }
+            
+            insertAfter("RAMLabel", RAMNode);
+        }
+        
+        function insertAfter(element, newElement) {
+            form.insertBefore(newElement, document.getElementById(element).nextSibling);
+        }
+        
+        renderSpeeds();
+        renderMotherboards();
+        renderRAM();
+        updatePrice();
+     
+        form.addEventListener("change", updatePrice);
+        document.getElementById("processor").addEventListener("change", renderSpeeds);
+        document.getElementById("processor").addEventListener("change", renderMotherboards);
+        document.getElementById("processor").addEventListener("change", renderRAM);
+    </script>
+
+
+
+</body></html>

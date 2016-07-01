@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 5, Exercise 1</title>
+    </head>
+    <body>
+        <script>
+            "use strict";
+            var months = ["January", "February", "March", "April", "May", 
+                "June", "July", "August", "September", "October", "November"];
+            var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+                        "Friday", "Saturday"];
+            var daySuffix;
+            
+            var nowDate = new Date();
+            nowDate.setMonth(nowDate.getMonth() + 12);
+            
+            switch (nowDate.getDate()) {
+                case 1:
+                case 21:
+                case 31:
+                    daySuffix = "st";
+                    break;
+                case 2:
+                case 22:
+                    daySuffix = "nd";
+                    break;
+                case 3:
+                case 23:
+                    daySuffix = "rd";
+                    break;
+                default:
+                    daySuffix = "th";
+                    break;
+            }
+            
+            document.write("The date 12 months from now will be " 
+                    + days[nowDate.getDay()] + " the " + nowDate.getDate() 
+                    + daySuffix + " of " + months[nowDate.getMonth()] + " " 
+                    + nowDate.getFullYear());
+        </script>
+    </body>
+</html>

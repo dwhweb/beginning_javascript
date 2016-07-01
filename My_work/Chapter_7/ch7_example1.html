@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 7, Example 1</title>
+    </head>
+    <body>
+        <script>
+            var localTime = new Date();
+            
+            var html = "<p> UTC time is " + localTime.toUTCString() + "</p>";
+            
+            html += "<p> Local time is " + localTime.toLocaleString() + "</p>";
+
+            html += "<p>Time zone offset is " + localTime.getTimezoneOffset()
+                    + "</p>";
+            
+            html += "<p>Using toLocaleTimeString() gives: " 
+                    + localTime.toLocaleTimeString() + "</p>";
+
+            html += "<p>Using toTimeString() gives: " + localTime.toTimeString()
+                    + "</p>";
+
+            html += "<p>Using toLocaleDateString() gives: "
+                    + localTime.toLocaleDateString() + "</p>";
+
+            html += "<p>Using toDateString() gives: " + localTime.toDateString()
+                    + "</p>";
+
+            document.write(html);
+        </script>
+    </body>
+</html>

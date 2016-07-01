@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Collections</title>
+    </head>
+<body>
+<label>The table</label>
+
+<form name="age-form">
+
+  <table id="age-table">
+    <tr>
+      <td id="age-header">Your age:</td>
+      <td>
+        <label>
+          <input type="radio" name="age" value="young"/> under 18
+        </label>
+        <label>
+          <input type="radio" name="age" value="mature"/> 18 to 50
+        </label>
+        <label>
+          <input type="radio" name="age" value="senior"/> after 60
+        </label>
+      </td>
+    </tr>
+  </table>
+
+</form>
+
+<script>
+    function checkInsideTable(id) {
+        var table = document.getElementById("age-table");
+        
+        if(table !== null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    alert(checkInsideTable("age-header"));
+</script>
+</body>
+</html>

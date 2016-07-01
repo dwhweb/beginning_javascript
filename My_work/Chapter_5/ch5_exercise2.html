@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 5, Exercise 2</title>
+    </head>
+    <body>
+        <script>
+            "use strict";
+            var names = [];
+            
+            do {
+                names.push(prompt("Enter a name:"));
+            } while(names[names.length - 1] !== "" 
+                    && names[names.length - 1] !== null)
+                
+            names.pop();
+            names.sort();
+            
+            for(var x in names) {
+                document.write(names[x] + "<br />");
+            }
+        </script>
+    </body>
+</html>

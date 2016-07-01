@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 11, Example 12</title>
+    </head>
+    <body>
+        <h2>Highway speed tracker</h2>
+        <form id="form1" name ="form1">
+            <p>
+                <label for="driverName">Driver name: </label>
+                <input type="text" name="driverName" id="driverName" />
+            </p>
+            <p>
+                <label for="speed">Speed (Miles/hour): </label>
+                <input type="number" name="speed" id="speed" />
+                <meter id="speedMeter" value="0" low="55" optimum="75" high="90"
+                       max="120"></meter>
+            </p>
+            <p>
+                <label for="vehicle">Vehicle type: </label>
+                <input type="text" name="vehicle" id="vehicle" />
+            </p>
+        </form>
+        <p>
+            Form completion progress:
+            <progress id="completionProgress" max="3" value="0"></progress>
+        </p>
+        <script>
+            var myForm = document.form1;
+            var completionProgress = 
+                    document.getElementById("completionProgress");
+            var speedMeter = document.getElementById("speedMeter");
+            
+            function countFieldData() {
+                var count = 0;
+                
+                for(var x = 0; x < myForm.length; x++) {
+                    var element = myForm[x];
+                    
+                    if(element.value) {
+                        count++;
+                    }
+                }
+                
+                return count;
+            }
+            
+            function formInputChange() {
+                completionProgress.value = countFieldData();
+                speedMeter.value = myForm.speed.value;
+            }
+            
+            myForm.addEventListener("input", formInputChange);
+        </script>
+    </body>
+</html>

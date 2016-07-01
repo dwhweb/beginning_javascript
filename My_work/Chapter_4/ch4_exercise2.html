@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 4, Exercise 2</title>
+    </head>
+    <body>
+        <script>
+            function writeTimesTable(startAt, endAt, aTable) {
+                for(var x = startAt; x <= endAt; x++) {
+                    document.write(aTable + " * " + x + " = " + (aTable * x) + 
+                            "<br/>");
+                }
+            }
+            
+            var aTable, startAt, endAt;
+            
+            while(aTable !== -1) {
+                do {
+                    aTable = parseInt(prompt("Enter a times table to display:"));
+                } while(isNaN(aTable))
+                    
+                do {        
+                    startAt = parseInt(prompt("Enter a value to start at:"));
+                } while(isNaN(startAt))        
+            
+                do {
+                    endAt = parseInt(prompt("Enter a value to end at:"));
+                } while(isNaN(endAt))
+            
+                writeTimesTable(startAt, endAt, aTable);
+            }
+        </script>
+    </body>
+</html>
