@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 13, Example 3a</title>
+    </head>
+    <body>
+        <h1>Welcome to example 3a</h1>
+        
+        <div id="whatsNew"></div>
+        
+        <script>
+            var lastUpdated = new Date("Tue, 28 Dec 2020");
+            var lastVisit = localStorage.lastVisit;
+            
+            if(lastVisit) {
+                lastVisit = new Date(lastVisit);
+                
+                if(lastVisit < lastUpdated) {
+                    document.getElementById("whatsNew").innerHTML = 
+                            "<a href='ch13_example2b.html'>What's new?</a>";
+                }
+            }
+            
+            localStorage.lastVisit = new Date();
+        </script>
+
+    </body>
+</html>
