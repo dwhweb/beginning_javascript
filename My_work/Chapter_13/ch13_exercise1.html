@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 13, Exercise 1</title>
+    </head>
+    <body>
+        <p>Welcome! You've visited this page <span id='visits'></span> times this
+            month (<span id='month'></span>)
+        </p>
+        
+        <script>
+            var currentDate = new Date();
+            var visits = parseInt(localStorage.visitsThisMonth);
+            
+            if(!visits) {
+                visits = 0;
+            }
+            
+            if(localStorage.lastVisit) {
+                var lastVisit = new Date(localStorage.lastVisit);
+                
+                if(currentDate.getMonth() === lastVisit.getMonth()
+                    && currentDate.getFullYear() === lastVisit.getFullYear()) {
+                    visits++;
+                } else {
+                    visits = 0;
+                }
+            }
+                
+            var months = ["January", "February", "March", "April", "May", 
+                "June", "July", "August", "September", "October", "November",
+                "December"];
+                
+            document.getElementById("visits").innerHTML = visits;
+            document.getElementById("month").innerHTML = 
+                    months[currentDate.getMonth()];
+            
+            localStorage.visitsThisMonth = visits;
+            localStorage.lastVisit = currentDate;
+        </script>
+    </body>
+</html>

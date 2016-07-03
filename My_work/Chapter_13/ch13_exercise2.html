@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+    </head>
+    <body>
+        <p id="advert"></p>
+        <script>
+            var ads = ["Advert 1: Buy this!", "Advert 2: Buy that!",
+            "Advert 3: Buy the other!"];
+        
+            var adNumber = Math.floor(Math.random() * ads.length);
+            
+            var lastAd = parseInt(localStorage.getItem("lastAd"), 10);
+            
+            if(lastAd === null) {
+                lastAd = adNumber;
+            } else {
+                while(adNumber === lastAd) {
+                    adNumber = Math.floor(Math.random() * ads.length);
+                }    
+            }
+            
+            document.getElementById("advert").innerHTML = ads[adNumber];
+            
+            localStorage.setItem("lastAd", adNumber); 
+        </script>
+    </body>
+</html>
