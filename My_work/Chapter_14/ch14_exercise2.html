@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 14: Example 2</title>
+        <style>
+            .fieldname {
+                text-align: right;
+            }
+            
+            .submit {
+                text-align: right;
+            }
+            
+            #hiddenFrame {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <table>
+                <tr>
+                    <td class="fieldname">
+                        Username:
+                    </td>
+                    <td>
+                        <input type="text" id="username" />
+                    </td>
+                    <td>
+                        <a id="usernameAvailability" href="#">Check availability</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Email:
+                    </td>
+                    <td>
+                        <input type="text" id="email" />
+                    </td>
+                    <td>
+                        <a id="emailAvailability" href="#">Check availability</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Password:
+                    </td>
+                    <td>
+                        <input type="text" id="password" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Verify password:
+                    </td>
+                    <td>
+                        <input type="text" id="password2" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="submit">
+                        <input type="submit" value="Submit" />
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+        <iframe src="about:blank" id="hiddenFrame" name="hiddenFrame"></iframe>
+        
+        <script>
+            function checkUsername(e) {
+                e.preventDefault;
+                
+                var userValue = document.getElementById("username").value;
+                
+                if(!userValue) {
+                    alert("Please enter a username to check!");
+                    return;
+                }
+                
+                var url = "ch14_iframevalidator.php?username=" + userValue;
+                
+                frames["hiddenFrame"].location = url;
+            }
+            
+            function checkEmail(e) {
+                e.preventDefault;
+                
+                var emailValue = document.getElementById("email").value;
+                
+                if(!emailValue) {
+                    alert("Please enter an email to check!");
+                    return;
+                }
+                
+                var url = "ch14_iframevalidator.php?email=" + emailValue;
+                frames["hiddenFrame"].location = url;
+                
+            }
+            
+            function handleResponse(responseText) {
+                var response = JSON.parse(responseText);
+                
+                if(response.available) {
+                    alert(response.searchTerm + " is available!");
+                } else {
+                    alert("We're sorry, but " + response.searchTerm
+                            + " is not available.");
+                }
+            }
+            
+            document.getElementsByClassName("submit")
+                    .addEventListener("click", checkUsername);
+            document.getElementsByClassName("submit")
+                    .addEventListener("click", checkEmail);
+        </script>    
+
+    </body>
+</html>
