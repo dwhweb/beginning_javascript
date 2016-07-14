@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 15: Exercise 1</title>
+        <style>
+            #positionController {
+                width: 560px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+        <div>
+            <button id="playbackController">Play</button>
+            <button id="muteController">Mute</button>
+            <input id="volumeController" type="range" min="0" max="1" step="0.1" value="1" />
+        </div>
+        <video id="bbbVideo">
+            <source src="bbb.mp4" />
+            <source src="bbb.webm" />
+        </video>
+            <br />
+            <input id="positionController" type="range" min="0" step="1" value="0" />
+        <script>
+            var video = document.getElementById("bbbVideo");
+            var playButton = document.getElementById("playbackController");
+            var muteButton = document.getElementById("muteController");
+            var volumeSlider = document.getElementById("volumeController");
+            var positionSlider = document.getElementById("positionController");
+            
+            function pauseHandler(e) {
+                playButton.innerHTML = "Resume";
+            }
+            
+            function playHandler(e) {
+                playButton.innerHTML = "Pause";
+            }
+            
+            function volumeChangeHandler(e) {
+                muteButton.innerHTML = video.muted ? "Unmute" : "Mute";
+            }
+            
+            function durationChangeHandler(e) {
+                positionSlider.max = video.duration;
+            }
+            
+            function timeChangeHandler(e) {
+                positionSlider.value = video.currentTime;
+            }
+            
+            function playbackClick(e) {
+                video.paused ? video.play() : video.pause();
+            }
+            
+            function muteClick(e) {
+                video.muted = !(video.muted);
+                volumeSlider.value = video.volume;
+            }
+            
+            function volumeClick(e) {
+                video.volume = volumeSlider.value;
+            }
+            
+            function seekInput(e) {
+                video.currentTime = positionSlider.value;
+            }
+            
+            playButton.addEventListener("click", playbackClick);
+            muteButton.addEventListener("click", muteClick);
+            volumeSlider.addEventListener("input", volumeClick);
+            positionSlider.addEventListener("input", seekInput);
+            
+            video.addEventListener("pause", pauseHandler);
+            video.addEventListener("playing", playHandler);
+            video.addEventListener("volumechange", volumeChangeHandler);
+            video.addEventListener("durationchange", durationChangeHandler);
+            video.addEventListener("timeupdate", timeChangeHandler);
+        </script>
+    </body>
+</html>
