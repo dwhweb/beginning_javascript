@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 16: Exercise 1</title>
+        <style>
+            .tabStrip {
+                background-color: #E4E2D5;
+                padding: 3px;
+                height: 22px;
+            }
+            
+            .tabStrip div {
+                float: left;
+                font: 14px arial;
+                cursor: pointer;
+            }
+            
+            .tabStrip-tab {
+                padding: 3px;
+            }
+            
+            .tabStrip-tab-hover {
+                border: 1px solid #316AC5;
+                background-color: #C1D2EE;
+                padding: 2px;
+            }
+            
+            .tabStrip-tab-click {
+                border: 1px solid #FACC5A;
+                background-color: #F9E391;
+                padding: 2px;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js" 
+        integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+	crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="tabStrip">
+            <div data-tab-number="1" class="tabStrip-tab">Tab 1</div>
+            <div data-tab-number="2" class="tabStrip-tab">Tab 2</div>
+            <div data-tab-number="3" class="tabStrip-tab">Tab 3</div>
+        </div>
+        <div id="descContainer"></div>
+
+        <script>
+            var activeTab = null;
+            
+            function handleEvent(e) {
+                var target = $(e.target);
+                var type = e.type;
+                
+                if(type === "mouseover" || type === "mouseout") {
+                    target.toggleClass("tabStrip-tab-hover");
+                } else if(type === "click") {
+                    if(activeTab) {
+                        activeTab.removeClass("tabStrip-tab-click");
+                    }
+                    
+                    target.addClass("tabStrip-tab-click");
+                    
+                    var num = target.attr("data-tab-number");
+                    showDescription(num);
+                    activeTab = target;
+                }
+            }
+            
+            function showDescription(num) {
+                var text = "Description for tab " + num;
+                
+                $("#descContainer").text(text);
+            }
+            
+            $(".tabStrip > div").on("mouseover mouseout click", handleEvent);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 14: Exercise 2</title>
+        <style>
+            .fieldname {
+                text-align: right;
+            }
+            
+            .submit {
+                text-align: right;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <table>
+                <tr>
+                    <td class="fieldname">
+                        Username:
+                    </td>
+                    <td>
+                        <input type="text" id="username" />
+                    </td>
+                    <td>
+                        <a id="usernameAvailability" href="#">Check availability</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Email:
+                    </td>
+                    <td>
+                        <input type="text" id="email" />
+                    </td>
+                    <td>
+                        <a id="emailAvailability" href="#">Check availability</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Password:
+                    </td>
+                    <td>
+                        <input type="text" id="password" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Verify password:
+                    </td>
+                    <td>
+                        <input type="text" id="password2" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="submit">
+                        <input type="submit" value="Submit" />
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js" 
+        integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+	crossorigin="anonymous"></script>
+        <script>
+            function checkAvailability(e) {
+                var valueName = null;
+                
+                if($(this).attr("id") === "usernameAvailability") {
+                    valueName = "username";
+                } else {
+                    valueName = "email";
+                }
+                
+                if(!($("#" + valueName).val())) {
+                    alert("Please enter a " + valueName + " to check!");
+                    return;
+                }
+                
+                var parms = {
+                    [valueName] : $("#" + valueName).val()
+                };
+                
+                $.getJSON("ch14_formvalidator.php", parms).done(handleResponse)
+                                                          .fail(handleError);
+            }
+                        
+            function handleResponse(response) {
+                if(response.available) {
+                    alert(response.searchTerm + " is available!");
+                } else {
+                    alert("We're sorry, but " + response.searchTerm
+                            + " is not available.");
+                }
+            }
+            
+            function handleError() {
+                alert("Sorry, a network error occurred." 
+                        + "Please try again later.");
+            }
+            
+            $("#usernameAvailability").on("click", checkAvailability);
+            $("#emailAvailability").on("click", checkAvailability);
+        </script>    
+
+    </body>
+</html>
