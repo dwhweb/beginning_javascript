@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 17: Example 5</title>
+        <script src="mootools-core-1.5.1-compressed.js"></script>
+    </head>
+    <body>
+        <button id="theButton">Click me!</button>
+        
+        <script>
+            var buttonObj = $("theButton");
+            
+            function buttonClick () {
+                $(document.body).setProperty("bgColor", "yellow")
+                        .appendHTML("<h1>Hello, Mootools!</h1>");
+            }
+            
+            buttonObj.addEvent("click", buttonClick);
+        </script>
+    </body>
+</html>

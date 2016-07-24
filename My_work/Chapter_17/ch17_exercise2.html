@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 17: Exercise 2</title>
+        <style>
+            .fieldname {
+                text-align: right;
+            }
+            
+            .submit {
+                text-align: right;
+            }
+        </style>
+        <script src="mootools-core-1.5.1-compressed.js"></script>
+    </head>
+    <body>
+        <form>
+            <table>
+                <tr>
+                    <td class="fieldname">
+                        Username:
+                    </td>
+                    <td>
+                        <input type="text" id="username" />
+                    </td>
+                    <td>
+                        <a id="usernameAvailability" href="#">Check availability</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Email:
+                    </td>
+                    <td>
+                        <input type="text" id="email" />
+                    </td>
+                    <td>
+                        <a id="emailAvailability" href="#">Check availability</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Password:
+                    </td>
+                    <td>
+                        <input type="text" id="password" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Verify password:
+                    </td>
+                    <td>
+                        <input type="text" id="password2" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="submit">
+                        <input type="submit" value="Submit" />
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+        <script>
+            var options = {
+                    url : "ch14_formvalidator.php",
+                    onSuccess : handleResponse,
+                    onFailure : handleFailure
+            };
+                
+            function checkUsername(e) {
+                e.preventDefault;
+                
+                var userValue = $("username").value;
+                
+                if(!userValue) {
+                    alert("Please enter a username to check!");
+                    return;
+                }
+                
+                var request = new Request.JSON(options).get({
+                    username : userValue
+                });
+            }
+            
+            function checkEmail(e) {
+                e.preventDefault;
+                
+                var emailValue = $("email").value;
+                
+                if(!emailValue) {
+                    alert("Please enter an email to check!");
+                    return;
+                }
+                
+                var request = new Request.JSON(options).get({
+                        email : emailValue
+                });    
+            }
+            
+            function handleResponse(responseJSON) {             
+                if(responseJSON.available) {
+                    alert(responseJSON.searchTerm + " is available!");
+                } else {
+                    alert("We're sorry, but " + responseJSON.searchTerm
+                            + " is not available.");
+                }
+            }
+            
+            function handleFailure(transport) {
+                alert("An error occured with an HTTP response status of "
+                        + transport.status);
+            }
+            
+            $("usernameAvailability").addEvent("click", checkUsername);
+            $("emailAvailability").addEvent("click", checkEmail);
+        </script>    
+
+    </body>
+</html>

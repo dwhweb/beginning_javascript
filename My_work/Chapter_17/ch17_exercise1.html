@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 17: Exercise 1</title>
+        <style>
+            .fieldname {
+                text-align: right;
+            }
+            
+            .submit {
+                text-align: right;
+            }
+        </style>
+        <script src="prototype.1.7.2.js"></script>
+    </head>
+    <body>
+        <form>
+            <table>
+                <tr>
+                    <td class="fieldname">
+                        Username:
+                    </td>
+                    <td>
+                        <input type="text" id="username" />
+                    </td>
+                    <td>
+                        <a id="usernameAvailability" href="#">Check availability</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Email:
+                    </td>
+                    <td>
+                        <input type="text" id="email" />
+                    </td>
+                    <td>
+                        <a id="emailAvailability" href="#">Check availability</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Password:
+                    </td>
+                    <td>
+                        <input type="text" id="password" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="fieldname">
+                        Verify password:
+                    </td>
+                    <td>
+                        <input type="text" id="password2" />
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="submit">
+                        <input type="submit" value="Submit" />
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+        <script>
+            function checkUsername(e) {
+                e.preventDefault;
+                
+                var userValue = $("username").value;
+                
+                if(!userValue) {
+                    alert("Please enter a username to check!");
+                    return;
+                }
+                
+                var options = {
+                    method : "get",
+                    onSuccess : handleResponse,
+                    onFailure : handleFailure,
+                    parameters : {
+                        username : userValue
+                    }
+                };
+                
+                new Ajax.Request("ch14_formvalidator.php", options);
+            }
+            
+            function checkEmail(e) {
+                e.preventDefault;
+                
+                var emailValue = $("email").value;
+                
+                if(!emailValue) {
+                    alert("Please enter an email to check!");
+                    return;
+                }
+                
+                var options = {
+                    method : "get",
+                    onSuccess : handleResponse,
+                    onFailure : handleFailure,
+                    parameters : {
+                        email : emailValue
+                    }
+                };
+                
+                new Ajax.Request("ch14_formvalidator.php", options);    
+            }
+            
+            function handleResponse(transport) {
+                var response = transport.responseJSON;
+                
+                if(response.available) {
+                    alert(response.searchTerm + " is available!");
+                } else {
+                    alert("We're sorry, but " + response.searchTerm
+                            + " is not available.");
+                }
+            }
+            
+            function handleFailure(transport) {
+                alert("An error occured with an HTTP response status of "
+                        + transport.status);
+            }
+            
+            $("usernameAvailability").observe("click", checkUsername);
+            $("emailAvailability").observe("click", checkEmail);
+        </script>    
+
+    </body>
+</html>
