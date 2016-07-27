@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 18: Example 5</title>
+    </head>
+    <body>
+        <input type="button" value="Button" name="button1" id="button1" />
+        <script>
+            function firstCall() {
+                secondCall();
+            }
+            
+            function secondCall() {
+                thirdCall();
+            }
+            
+            function thirdCall() {
+                //
+            }
+            
+            function buttonClick() {
+                debugger;
+                firstCall();
+            }
+            
+            document.getElementById("button1").addEventListener("click", buttonClick);
+        </script>
+
+    </body>
+</html>
